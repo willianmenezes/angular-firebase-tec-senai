@@ -38,4 +38,8 @@ export class ProdutoService {
     excluirProduto(id: string) {
         return from(this.produtos.doc(id).delete());
     }
+
+    editarProduto(produto: Produto) {
+        return from(this.produtos.doc(produto.id).update(produto));
+    }
 }

@@ -25,6 +25,9 @@ export class ProdutoComponent implements OnInit {
   categorias: Categoria[];
   fornecedores: Fornecedor[];
   produtos: Produto[];
+  label = 'Cadastrar';
+  cadastrando = true;
+  idProdutoEditar: string;
 
   fornecedorCadastro: Fornecedor;
   categoriaCadastro: Categoria;
@@ -80,7 +83,7 @@ export class ProdutoComponent implements OnInit {
     this.fornecedorCadastro = this.fornecedores.find((item) => item.id === id);
   }
 
-  cadastrar() {
+  handle() {
 
     if (this.formCadastrar.valid) {
 
@@ -88,14 +91,30 @@ export class ProdutoComponent implements OnInit {
       produto.status = this.formCadastrar.get('status').value === 'true' ? true : false;
       produto.categoria = this.categoriaCadastro;
       produto.fornecedor = this.fornecedorCadastro;
-      produto.id = uuid();
 
-      this.produtoService
-        .cadastrarProduto(produto)
-        .subscribe((response) => {
-          alertify.success('Produto cadastrado com  sucesso');
-          this.formCadastrar.reset();
-        });
+      if (this.cadastrando) {
+
+        produto.id = uuid();
+        this.produtoService
+          .cadastrarProduto(produto)
+          .subscribe((response) => {
+            alertify.success('Produto cadastrado com  sucesso');
+            this.formCadastrar.reset();
+          });
+
+      } else {
+
+        produto.id = this.idProdutoEditar;
+
+        this.produtoService
+          .editarProduto(produto)
+          .subscribe((response) => {
+            alertify.success('Produto atualizado com sucesso');
+            this.cadastrando = true;
+            this.formCadastrar.reset();
+            this.label = 'Cadastrar';
+          });
+      }
     }
   }
 
@@ -104,6 +123,25 @@ export class ProdutoComponent implements OnInit {
       .excluirProduto(id)
       .subscribe(() => {
         alertify.success('Produto removido com sucesso');
-      })
+      });
+  }
+
+  popularFormulario(produto: Produto) {
+
+    this.label = 'Atualizar';
+    this.cadastrando = false;
+
+    this.selecionarCategoria(produto.categoria.id);
+    this.selecionarFornecedor(produto.fornecedor.id);
+
+    this.idProdutoEditar = produto.id;
+
+    this.formCadastrar.patchValue({
+      nome: produto.nome,
+      status: produto.status,
+      quantidadeEstoque: produto.quantidadeEstoque,
+      categoria: produto.categoria.id,
+      fornecedor: produto.fornecedor.id
+    });
   }
 }

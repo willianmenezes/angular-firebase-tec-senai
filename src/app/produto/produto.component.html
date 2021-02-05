@@ -15,9 +15,9 @@
         <div class="col">
             <div class="collapse multi-collapse" id="multiCollapseExample2">
                 <div class="card card-body shadow">
-                    <h2>Cadastrar produto</h2>
+                    <h2>{{label}} produto</h2>
                     <hr>
-                    <form [formGroup]="formCadastrar" (submit)="cadastrar()">
+                    <form [formGroup]="formCadastrar" (submit)="handle()">
                         <!-- input nome -->
                         <div class="form-group">
                             <label for="inputNome">Nome: </label>
@@ -65,7 +65,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary"
-                            [disabled]="!formCadastrar.valid">Cadastrar</button>
+                            [disabled]="!formCadastrar.valid">{{label}}</button>
                     </form>
                 </div>
             </div>
@@ -76,6 +76,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nome</th>
+                        <th scope="col">Fornecedor</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">Status</th>
                         <th scope="col"> </th>
@@ -85,11 +87,14 @@
                     <tr *ngFor="let produto of produtos; index as posicao;">
                         <th scope="row">{{posicao + 1}}</th>
                         <td>{{produto.nome}}</td>
+                        <td>{{produto.fornecedor.nome}}</td>
+                        <td>{{produto.categoria.nome}}</td>
                         <td>{{produto.quantidadeEstoque}}</td>
                         <td>{{produto.status}}</td>
                         <td>
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-warning m-1 mb-0">Editar</button>
+                                <button class="btn btn-warning m-1 mb-0"
+                                    (click)="popularFormulario(produto)">Editar</button>
                                 <button class="btn btn-danger m-1 mb-0" (click)="excluir(produto.id)">Excluir</button>
                             </div>
                         </td>
