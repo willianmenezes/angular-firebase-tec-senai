@@ -1,0 +1,73 @@
+<!-- As a heading -->
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Produtos</span>
+    </div>
+</nav>
+<div class="container">
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary mt-2 mb-2" type="button" data-toggle="collapse" data-target=".multi-collapse"
+            aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
+            <fa-icon [icon]="icons.faPlus"></fa-icon>
+        </button>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample2">
+                <div class="card card-body shadow">
+                    <h2>Cadastrar produto</h2>
+                    <hr>
+                    <form [formGroup]="formCadastrar" (submit)="cadastrar()">
+                        <!-- input nome -->
+                        <div class="form-group">
+                            <label for="inputNome">Nome: </label>
+                            <input type="text" class="form-control" id="inputNome" formControlName="nome">
+                        </div>
+
+                        <!-- input quantidade em estoque -->
+                        <div class="form-group">
+                            <label for="inputQuantidade">Quantidade em estoque: </label>
+                            <input type="number" class="form-control" id="inputQuantidade"
+                                formControlName="quantidadeEstoque">
+                        </div>
+
+                        <!-- input status -->
+                        <div class="form-group">
+                            <label for="inputStatus">Status: </label>
+                            <select class="form-control" id="inputStatus" formControlName="status">
+                                <option value="">Selecione um status</option>
+                                <option value="true">Ativo</option>
+                                <option value="false">Inativo</option>
+                            </select>
+                        </div>
+
+                        <!-- input categoria -->
+                        <div class="form-group">
+                            <label for="inputCategoria">Categorias: </label>
+                            <select class="form-control" id="inputCategoria"
+                                (change)="selecionarCategoria($event.target.value)" formControlName="categoria">
+                                <option value="">Selecione uma categoria</option>
+                                <option value={{categoria.id}} *ngFor="let categoria of categorias">{{categoria.nome}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- input fornecedor -->
+                        <div class="form-group">
+                            <label for="inputFornecedor">Fornecedores: </label>
+                            <select class="form-control" id="inputFornecedor"
+                                (change)="selecionarFornecedor($event.target.value)" formControlName="fornecedor">
+                                <option value="">Selecione um fornecedor</option>
+                                <option value={{fornecedor.id}} *ngFor="let fornecedor of fornecedores">
+                                    {{fornecedor.nome}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" [disabled]="!formCadastrar.valid" >Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

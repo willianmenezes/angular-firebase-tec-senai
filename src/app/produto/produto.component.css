@@ -1,0 +1,23 @@
+input.ng-valid.ng-dirty.ng-touched {
+    border-color: green;
+}
+
+input.ng-invalid.ng-pristine.ng-touched {
+    border-color: red;
+}
+
+input.ng-invalid.ng-dirty.ng-touched {
+    border-color: red;
+}
+
+select.ng-valid.ng-dirty.ng-touched {
+    border-color: green;
+}
+
+select.ng-invalid.ng-pristine.ng-touched {
+    border-color: red;
+}
+
+select.ng-invalid.ng-dirty.ng-touched {
+    border-color: red;
+}
