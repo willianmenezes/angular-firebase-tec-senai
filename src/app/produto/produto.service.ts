@@ -34,4 +34,8 @@ export class ProdutoService {
     cadastrarProduto(produto: Produto) {
         return from(this.produtos.doc(produto.id).set(produto));
     }
+
+    excluirProduto(id: string) {
+        return from(this.produtos.doc(id).delete());
+    }
 }

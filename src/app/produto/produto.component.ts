@@ -59,8 +59,8 @@ export class ProdutoComponent implements OnInit {
   buscarProdutos() {
     this.produtoService
       .buscarProdutos()
-      .subscribe(() => {
-
+      .subscribe((response) => {
+        this.produtos = response;
       })
   }
 
@@ -94,7 +94,16 @@ export class ProdutoComponent implements OnInit {
         .cadastrarProduto(produto)
         .subscribe((response) => {
           alertify.success('Produto cadastrado com  sucesso');
+          this.formCadastrar.reset();
         });
     }
+  }
+
+  excluir(id: string) {
+    this.produtoService
+      .excluirProduto(id)
+      .subscribe(() => {
+        alertify.success('Produto removido com sucesso');
+      })
   }
 }

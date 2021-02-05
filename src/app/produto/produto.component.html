@@ -64,10 +64,38 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" [disabled]="!formCadastrar.valid" >Cadastrar</button>
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="!formCadastrar.valid">Cadastrar</button>
                     </form>
                 </div>
             </div>
+
+            <!-- tabela de produtos -->
+            <table class="table mt-4 table-striped table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let produto of produtos; index as posicao;">
+                        <th scope="row">{{posicao + 1}}</th>
+                        <td>{{produto.nome}}</td>
+                        <td>{{produto.quantidadeEstoque}}</td>
+                        <td>{{produto.status}}</td>
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-warning m-1 mb-0">Editar</button>
+                                <button class="btn btn-danger m-1 mb-0" (click)="excluir(produto.id)">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
